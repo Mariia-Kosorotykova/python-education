@@ -7,22 +7,22 @@ class Calculator:
 
     @staticmethod
     def addition(first_number, second_number):
-        """This function takes 2 arguments and return adds them"""
+        """This function takes 2 arguments and returns their sum"""
         return first_number + second_number
 
     @staticmethod
     def subtraction(first_number, second_number):
-        """This function takes 2 arguments and return subtractions them"""
+        """This function takes 2 arguments and returns their difference"""
         return first_number - second_number
 
     @staticmethod
     def multiplication(first_number, second_number):
-        """This function takes 2 arguments and return multiplications them"""
+        """This function takes 2 arguments and returns their product"""
         return first_number * second_number
 
     @staticmethod
     def division(first_number, second_number):
-        """This function takes 2 arguments and return divisions them"""
+        """This function takes 2 arguments and return their quotient"""
         return first_number / second_number
 
 obj = Calculator()
