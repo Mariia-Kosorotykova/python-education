@@ -1,6 +1,5 @@
-"""
-This module works as a simple calculator.
-"""
+"""This module works as a simple calculator."""
+
 
 class Calculator:
     """This class performs 4 simple operations on numbers."""
@@ -25,5 +24,5 @@ class Calculator:
         """This function takes 2 arguments and return their quotient"""
         return first_number / second_number
 
-obj = Calculator()
-print(obj.addition(5, 3))
+calculation = Calculator()
+print(calculation.addition(5, 3))
