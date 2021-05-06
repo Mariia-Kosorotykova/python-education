@@ -48,7 +48,7 @@ class Car(Transport):
         print(f'Benefits {self.name} is cheap fuel {self.fuel_price}$')
 
 class Bicycle(Transport):
-    """This class is inherited from Transport and represents Car"""
+    """This class is inherited from Transport and represents Bicycle"""
     weight = 4
 
     def print_weight(self):
@@ -58,11 +58,11 @@ class Bicycle(Transport):
 
     @staticmethod
     def engine_available():
-        """Shows if there is an engine"""
+        """Shows the presence of the engine"""
         print("Bicycle hasn't engine")
 
 class Plane(Transport):
-    """This class is inherited from Transport and represents Car"""
+    """This class is inherited from Transport and represents Plane"""
 
     def speed_this_car(self, speed):
         """Displays speed of certain type of transport"""
@@ -74,7 +74,7 @@ class Plane(Transport):
         print(f"Weight {self.name} is {self.weight} kg")
 
 class Motorcycle(Transport):
-    """This class is inherited from Transport and represents Car"""
+    """This class is inherited from Transport and represents Motorcycle"""
     color = "red"
 
     def print_color(self):
@@ -92,7 +92,7 @@ class Engine(Bicycle, Motorcycle):
 
     @staticmethod
     def engine_available():
-        """Shows if there is an engine"""
+        """Shows the presence of the engine"""
         Motorcycle.engine_available()
 
 if __name__ == "__main__":
