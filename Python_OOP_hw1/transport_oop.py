@@ -133,7 +133,7 @@ class Boat(Transport):
 
     def move(self):
         """This method describes transport movement"""
-        print("This transport moves on water")
+        print(f"This transport {self.name} moves on water")
         super().move()
 
 
