@@ -10,33 +10,70 @@ redefine methods and attributes for each class
 parent class, for example Engine
 """
 
+from abc import ABC, abstractmethod
+
+class Engine(ABC):
+    """This is parent's class that describes Engine"""
+    type_engine = "petrol"
+
+    def __init__(self):
+        self.engine_power = None
+        self.manufactured_in = None
+
+    @abstractmethod
+    def manufacture_year(self, manufactured_in):
+        """Displays manufacturing year of select engine"""
+        self.manufactured_in = manufactured_in
+        print(f"This engine manufactured in {manufactured_in} year.")
+
+    def engine_info(self, engine_power):
+        """Provides info about engine"""
+        self.engine_power = engine_power
+        print(f"This transport has {self.type_engine} type of engine"
+              f" and power - {self.engine_power}.")
 
 class Transport:
     """This is parent's class that describes Transport"""
     color = "gray"
     weight = 2500
     all_transports = []
+    material = "aluminum"
 
     def __init__(self, name):
         self.name = name
         self.speed = None
+        self.manufactured_in = None
         self.all_transports.append(self.name)
+
+    def manufacture_year(self, manufactured_in):
+        """Displays manufacturing year of select transport"""
+        self.manufactured_in = manufactured_in
+        print(f"This transport manufactured in {manufactured_in} year.")
 
     def speed_this_car(self, speed):
         """Displays speed of certain type of transport"""
         self.speed = speed
-        print(f'Speed {self.name} is {self.speed}')
+        print(f'Speed {self.name} is {self.speed}!')
 
     def print_weight(self):
         """Displays weight of certain type of transport"""
-        print(f"Weight {self.name} is {self.weight} kg")
+        print(f"Weight {self.name} is {self.weight} kg.")
 
     def print_color(self):
         """Displays color of certain type of transport"""
-        print(f"Color {self.name} is {self.weight}")
+        print(f"Color {self.name} is {self.weight}.")
 
-class Car(Transport):
-    """This class is inherited from Transport and represents Car"""
+    def print_material(self):
+        """Displays material of certain type of transport"""
+        print(f"Material {self.name} is {self.material}.")
+
+    def move(self):
+        """This method describes transport movement"""
+        print(f"Transport {self.name} can move")
+
+class Car(Transport, Engine):
+    """Inherited from Transport,Engine and represents Car"""
+    type_engine = "electric"
 
     def __init__(self, name, fuel_price):
         self.fuel_price = fuel_price
@@ -44,7 +81,6 @@ class Car(Transport):
 
     def print_benefits(self):
         """Displays benefits of certain type of transport"""
-        # print(f'Benefits {self.name} is manufactured in {self.creation_year}')
         print(f'Benefits {self.name} is cheap fuel {self.fuel_price}$')
 
 class Bicycle(Transport):
@@ -56,13 +92,13 @@ class Bicycle(Transport):
         print("Bicycle is the lightest weight transport!")
         print(f"Weight {self.name} is {self.weight} kg")
 
-    @staticmethod
-    def engine_available():
-        """Shows the presence of the engine"""
-        print("Bicycle hasn't engine")
+    def move(self):
+        """This method describes transport movement"""
+        print(f"Transport {self.name} moves by land")
+        super().move()
 
-class Plane(Transport):
-    """This class is inherited from Transport and represents Plane"""
+class Plane(Transport, Engine):
+    """Inherited from Transport,Engine and represents Plane"""
 
     def speed_this_car(self, speed):
         """Displays speed of certain type of transport"""
@@ -73,42 +109,67 @@ class Plane(Transport):
         """Displays weight of certain type of transport"""
         print(f"Weight {self.name} is {self.weight} kg")
 
-class Motorcycle(Transport):
-    """This class is inherited from Transport and represents Motorcycle"""
+class Motorcycle(Transport, Engine):
+    """Inherited from Transport,Engine and represents Motorcycle"""
     color = "red"
 
     def print_color(self):
         """Displays color of certain type of transport"""
         print("Motorcycle is the brightest transport!")
-        print(f"Color {self.name} is {self.weight}")
+        print(f"Color {self.name} is {self.color}.")
 
-    @staticmethod
-    def engine_available():
-        """Shows if there is an engine"""
-        print("Motorcycle has an engine")
+    def manufacture_year(self, manufactured_in):
+        """Displays manufacturing year of select engine"""
+        Engine.manufacture_year(self, manufactured_in)
 
-class Engine(Bicycle, Motorcycle):
-    """This class is inherited from Bicycle, Motorcycle and represents Engine"""
+class Boat(Transport):
+    """This class is inherited from Transport and represents Boat"""
+    material = "plastic"
 
-    @staticmethod
-    def engine_available():
-        """Shows the presence of the engine"""
-        Motorcycle.engine_available()
+    def print_material(self):
+        """Displays material of certain type of transport"""
+        print(f"{self.material} boats are very popular.")
+        super().print_material()
+
+    def move(self):
+        """This method describes transport movement"""
+        print("This transport moves on water")
+        super().move()
+
+
+class Catamaran(Bicycle, Boat):
+    """Inherited from Bicycle, Boat and represents Catamaran"""
+
+    def move(self):
+        """This method describes transport movement"""
+        super(Boat, self).move()
+
 
 if __name__ == "__main__":
     toyota = Transport("toyota")
-    toyota.speed_this_car(250)
+    toyota.speed_this_car(230)
     toyota.print_weight()
 
     tesla = Car("Tesla", 5)
     tesla.print_benefits()
+    tesla.engine_info(362)
 
     bmx = Bicycle("BMX")
     bmx.print_weight()
 
     boeing = Plane("Boeing")
-    boeing.speed_this_car(700)
-    print(Transport.all_transports)
+    boeing.speed_this_car(943)
+    boeing.engine_info(735)
+    boeing.manufacture_year(2020)
 
-    engine = Engine("motorbike")
-    engine.engine_available()
+    yamaha = Motorcycle("Yamaha")
+    yamaha.print_color()
+    yamaha.manufacture_year(1990)
+
+    riverday = Boat("Riverday")
+    riverday.print_material()
+
+    aurora = Catamaran("Aurora")
+    aurora.move()
+
+    print(Transport.all_transports)
