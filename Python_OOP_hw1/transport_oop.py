@@ -10,12 +10,14 @@ redefine methods and attributes for each class
 parent class, for example Engine
 """
 
+
 from abc import ABC, abstractmethod
 
 class Engine(ABC):
     """This is parent's class that describes Engine"""
     type_engine = "petrol"
 
+    @abstractmethod
     def __init__(self):
         self.engine_power = None
         self.manufactured_in = None
@@ -34,10 +36,10 @@ class Engine(ABC):
 
 class Transport:
     """This is parent's class that describes Transport"""
-    color = "gray"
     weight = 2500
     all_transports = []
     material = "aluminum"
+    braking_dist = 0
 
     def __init__(self, name):
         self.name = name
@@ -45,12 +47,20 @@ class Transport:
         self.manufactured_in = None
         self.all_transports.append(self.name)
 
+    def __len__(self):
+        return len(self.all_transports)
+
+    @classmethod
+    def braking_distances(cls):
+        """This method describes braking distances"""
+        print(f"Braking distance for this transport - {cls.braking_dist}m.")
+
     def manufacture_year(self, manufactured_in):
         """Displays manufacturing year of select transport"""
         self.manufactured_in = manufactured_in
         print(f"This transport manufactured in {manufactured_in} year.")
 
-    def speed_this_car(self, speed):
+    def speed_this_transport(self, speed):
         """Displays speed of certain type of transport"""
         self.speed = speed
         print(f'Speed {self.name} is {self.speed}!')
@@ -59,9 +69,10 @@ class Transport:
         """Displays weight of certain type of transport"""
         print(f"Weight {self.name} is {self.weight} kg.")
 
-    def print_color(self):
+    @staticmethod
+    def print_color(color):
         """Displays color of certain type of transport"""
-        print(f"Color {self.name} is {self.weight}.")
+        print(f"This type of transport has {color} color!")
 
     def print_material(self):
         """Displays material of certain type of transport"""
@@ -74,6 +85,7 @@ class Transport:
 class Car(Transport, Engine):
     """Inherited from Transport,Engine and represents Car"""
     type_engine = "electric"
+    braking_dist = 2
 
     def __init__(self, name, fuel_price):
         self.fuel_price = fuel_price
@@ -99,11 +111,16 @@ class Bicycle(Transport):
 
 class Plane(Transport, Engine):
     """Inherited from Transport,Engine and represents Plane"""
+    def __gt__(self, other):
+        return self.speed > other.speed
 
-    def speed_this_car(self, speed):
+    def __lt__(self, other):
+        return self.speed < other.speed
+
+    def speed_this_transport(self, speed):
         """Displays speed of certain type of transport"""
         print("Plane is the fastest type of transport!")
-        super().speed_this_car(speed)
+        super().speed_this_transport(speed)
 
     def print_weight(self):
         """Displays weight of certain type of transport"""
@@ -111,12 +128,7 @@ class Plane(Transport, Engine):
 
 class Motorcycle(Transport, Engine):
     """Inherited from Transport,Engine and represents Motorcycle"""
-    color = "red"
 
-    def print_color(self):
-        """Displays color of certain type of transport"""
-        print("Motorcycle is the brightest transport!")
-        print(f"Color {self.name} is {self.color}.")
 
     def manufacture_year(self, manufactured_in):
         """Displays manufacturing year of select engine"""
@@ -136,40 +148,73 @@ class Boat(Transport):
         print(f"This transport {self.name} moves on water")
         super().move()
 
-
 class Catamaran(Bicycle, Boat):
     """Inherited from Bicycle, Boat and represents Catamaran"""
 
+    def __init__(self, name, price):
+        self._price = price
+        super().__init__(name)
+
+    def __mul__(self, other):
+        """Converting dollars into the required currency"""
+        print("Please, enter, exchange rate:")
+        if isinstance(other, int):
+            print("In your currency it cost - ", end=" ")
+            print(self._price * other)
+        else:
+            print("Please, enter a exchange rate")
+
     def move(self):
         """This method describes transport movement"""
-        super(Boat, self).move()
+        super().move()
 
+    @property
+    def price(self):
+        """This function displays price"""
+        print(f"Catamaran {self.name} price is {self._price} $")
+
+    @price.setter
+    def price(self, new_price):
+        if new_price > 0 and isinstance(new_price, int):
+            self._price = new_price
+        else:
+            print("Please, enter a valid price")
+
+    @price.deleter
+    def price(self):
+        del self._price
 
 if __name__ == "__main__":
-    toyota = Transport("toyota")
-    toyota.speed_this_car(230)
-    toyota.print_weight()
 
     tesla = Car("Tesla", 5)
     tesla.print_benefits()
     tesla.engine_info(362)
+    tesla.braking_distances()
 
     bmx = Bicycle("BMX")
     bmx.print_weight()
 
     boeing = Plane("Boeing")
-    boeing.speed_this_car(943)
+    boeing.speed_this_transport(943)
     boeing.engine_info(735)
     boeing.manufacture_year(2020)
 
+    atp = Plane("ATP")
+    atp.speed_this_transport(496)
+    print(atp.name, 'faster than', boeing.name, '-', atp > boeing)
+    print(boeing.name, 'faster than', atp.name, '-', atp < boeing)
+
     yamaha = Motorcycle("Yamaha")
-    yamaha.print_color()
+    yamaha.print_color("red")
     yamaha.manufacture_year(1990)
 
     riverday = Boat("Riverday")
     riverday.print_material()
 
-    aurora = Catamaran("Aurora")
+    aurora = Catamaran("Aurora", 9000)
     aurora.move()
+    aurora.price = 78.99
+    # aurora * 28
 
     print(Transport.all_transports)
+    print(f"Quantity of available transport - {len(atp)}")
