@@ -27,7 +27,7 @@ class Employee:
     def __init__(self, name, position):
         self._name = name
         self.position = position
-        self.all_employee[name] = position
+        self.all_employee[self._id_counter] = name + "-" + position
         self.name_id = Employee._id_counter
         Employee._id_counter += 1
 
@@ -101,7 +101,7 @@ class ClientInside:
         self.selected_table = selected_table
         self.another_table = None
         self._id_client_inside = ClientInside._id_counter
-        self.client_order = []
+        self.client_order = Order()
         ClientInside._id_counter += 1
 
     def change_table(self, another_table):
@@ -116,15 +116,16 @@ class ClientInside:
 
     def make_order(self, *args):
         """This method creates list with desired dishes"""
+        self.client_order.status_order = "Formed"
         for i in args:
-            self.client_order.append(i)
-        print(f"Your order consists of: {self.client_order}")
+            self.client_order.order_list.append(i)
+        print(f"Your order consists of: {self.client_order.order_list}")
+        print(f"Status of your order is: '{self.client_order.status_order}'")
 
-    @staticmethod
-    def recieve_payment(order_obj):
+    def receive_payment(self):
         """This method change order status to 'Order paid'"""
-        order_obj.status_order = "Order paid"
-        print(f"Status of this order is: '{order_obj.status_order}'")
+        self.client_order.status_order = "Order paid"
+        print(f"Status of this order is: '{self.client_order.status_order}'")
 
 class Chief(Employee):
     """Inherited from Employee and represents Chief"""
@@ -188,24 +189,22 @@ class ClientOutside:
         self.__client_name = client_name
         self._telephone = telephone
         self._address = address
-        self.client_order = []
         self.name_id = ClientOutside._id_counter
-        self.status_order = None
+        self.client_order = Order()
         ClientOutside._id_counter += 1
 
-    def make_order(self, order_obj, *args):
+    def make_order(self, *args):
         """This method creates list with desired dishes"""
+        self.client_order.status_order = "Formed"
         for i in args:
-            self.client_order.append(i)
-        order_obj.status_order = "Formed"
-        print(f"Your order consists of: {self.client_order}")
-        print(f"Status of your order is: '{order_obj.status_order}'")
+            self.client_order.order_list.append(i)
+        print(f"Your order consists of: {self.client_order.order_list}")
+        print(f"Status of your order is: '{self.client_order.status_order}'")
 
-    @staticmethod
-    def recieve_payment(order_obj):
+    def receive_payment(self):
         """This method change order status to 'Order paid'"""
-        order_obj.status_order = "Order paid"
-        print(f"Status of this order is: '{order_obj.status_order}'")
+        self.client_order.status_order = "Order paid"
+        print(f"Status of this order is: '{self.client_order.status_order}'")
 
 class Courier(Employee):
     """Inherited from Employee and represents Courier"""
@@ -215,14 +214,14 @@ class Courier(Employee):
         super().__init__(name, position="Courier")
 
     @staticmethod
-    def recieve_order(order_obj):
+    def receive_order(order_obj):
         """This method change order status to 'Order accepted'"""
         order_obj.status_order = "Order accepted"
         print(f"Status of your order is: '{order_obj.status_order}'")
         print("Order in progress...")
 
     @staticmethod
-    def recieve_payment(order_obj):
+    def receive_payment(order_obj):
         """This method change order status to 'Order closed'"""
         order_obj.status_order = "Order closed"
         print(f"Status of this order is: '{order_obj.status_order}'")
@@ -235,12 +234,13 @@ class Order:
         self.status_order = None
         self._name_id_order = Order._id_counter
         Order._id_counter += 1
+        self.order_list = []
 
     @staticmethod
     def total_price(client_obj):
         """This method calculates the order amount"""
         order_amount = 0
-        for i in client_obj.client_order:
+        for i in client_obj.client_order.order_list:
             order_amount += Menu.list_dishes.get(i)
         print(f"sum your order - {order_amount} $")
 
@@ -274,11 +274,3 @@ if __name__ == '__main__':
     mari.book_tables(vlad)
     vlad.see_menu()
     vlad.make_order("Pizza", "Cake")
-
-    f = Order()
-    f.total_price(vlad)
-
-    lora = ClientOutside("Lora", 75389, "Peremogy, 85")
-    order1 = Order()
-    lora.make_order(order1, "Pizza", "Cake", "Borscht")
-    f.total_price(lora)
