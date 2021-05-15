@@ -53,7 +53,7 @@ class Sentence:
     @property
     def other_chars(self):
         """Returns list of special chars"""
-        return [chars for chars in re.findall(r'[,.!?_\':;/#%*\=@"]', self.text)]
+        return re.findall(r'[,.!?_\':;/#%*\=@"]', self.text)
 
 if __name__ == "__main__":
     ex_sentence = Sentence("Hello, world=! It''#s me!")
