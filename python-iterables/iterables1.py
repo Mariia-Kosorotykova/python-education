@@ -48,7 +48,7 @@ class Sentence:
     @property
     def words(self):
         """Returns list of the words"""
-        return [i for i in re.findall(r"\w+", self.text)]
+        return list(self._words())
 
     @property
     def other_chars(self):
