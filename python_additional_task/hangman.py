@@ -32,18 +32,21 @@ def enter_letter():
 
     while attempts < 7:
         if secret_word_list == list(secret_word):
+            print("_" * 7)
             print("Congratulations! You won! :)")
+            print(f"The hidden word is: {str(secret_word).upper()}.")
+            print("_" * 7)
             menu()
 
         user_letter = input("Enter letter: ").lower()
 
         if not user_letter.isalpha() or len(user_letter) > 1:
-            print("Please, enter a one letter!")
+            print("Invalid input. Only single letter accepted!")
             continue
 
         elif user_letter in user_attempts:
             print("You've already entered this letter")
-            print(f"Wrong attempts: {user_attempts}")
+            print(f"Your inputs: {' '.join(user_attempts)}")
             continue
 
         elif user_letter in secret_word:
@@ -57,7 +60,7 @@ def enter_letter():
             user_attempts.append(user_letter)
             print(show_secret_word)
             print(f"You have {remaining_attempts} attempts remaining")
-            print(f"Your attempts: {user_attempts}")
+            print(f"Your inputs: {' '.join(user_attempts)}")
 
         else:
             print("Oh, no! There is no such letter in the hidden word!")
@@ -66,8 +69,9 @@ def enter_letter():
             remaining_attempts -= 1
             print(f"You have {remaining_attempts} attempts remaining")
             print(show_secret_word)
-            print(f"Your attempts: {user_attempts}")
+            print(f"Your inputs: {' '.join(user_attempts)}")
             user_attempts.append(user_letter)
+    print(f"The hidden word is: {str(secret_word).upper()}.")
     print("You lose... Try again :)")
     menu()
 
