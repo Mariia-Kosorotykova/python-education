@@ -1,10 +1,11 @@
 """This module implements Hangman game"""
 
 
+import sys
 import random
 from pictures import HANGMAN_PICS
 
-print("Hello! Rules: ... . Start game!")
+print("Hello! Rules: You must guess the word and you have 7 attempts for it. Start game!")
 
 word_list = [
     "loop", "python", "random", "education", "django", "flask",
@@ -15,26 +16,49 @@ past_words = []
 
 def enter_letter():
     """This module describe game logic"""
-    idx_secret_word = random.randint(0, len(word_list) - 1)
-    secret_word = word_list[idx_secret_word]
+    secret_word = word_list[random.randint(0, len(word_list) - 1)]
 
     print(secret_word)
 
     past_words.append(secret_word)
 
-    show_secret_word = ['_' for i in secret_word]
+    show_secret_word = "_" * len(secret_word)
     print(show_secret_word)
+    secret_word_list = list(show_secret_word)
 
     remaining_attempts = 7
     attempts = 0
+    user_attempts = []
+
     while attempts < 7:
-        user_letter = input("Enter letter: ")
-        if user_letter in secret_word:
+        if secret_word_list == list(secret_word):
+            print("Congratulations! You won! :)")
+            menu()
+
+        user_letter = input("Enter letter: ").lower()
+
+        if not user_letter.isalpha() or len(user_letter) > 1:
+            print("Please, enter a one letter!")
+            continue
+
+        elif user_letter in user_attempts:
+            print("You've already entered this letter")
+            print(f"Wrong attempts: {user_attempts}")
+            continue
+
+        elif user_letter in secret_word:
             print("You guessed right!")
-            guess_idx_let = secret_word.index(user_letter)
-            show_secret_word[guess_idx_let] = user_letter
+
+            for i, j in enumerate(secret_word):
+                if j == user_letter:
+                    secret_word_list[i] = j
+
+            show_secret_word = "".join(secret_word_list)
+            user_attempts.append(user_letter)
             print(show_secret_word)
             print(f"You have {remaining_attempts} attempts remaining")
+            print(f"Your attempts: {user_attempts}")
+
         else:
             print("Oh, no! There is no such letter in the hidden word!")
             print(HANGMAN_PICS[attempts])
@@ -42,6 +66,8 @@ def enter_letter():
             remaining_attempts -= 1
             print(f"You have {remaining_attempts} attempts remaining")
             print(show_secret_word)
+            print(f"Your attempts: {user_attempts}")
+            user_attempts.append(user_letter)
     print("You lose... Try again :)")
     menu()
 
@@ -57,7 +83,7 @@ def menu():
         elif choice_user == 2:
             print(f"List of past word: {past_words}")
         elif choice_user == 3:
-            exit()
+            sys.exit("Bye!")
         else:
             print("Choice doesn't correct!")
 
