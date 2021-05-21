@@ -10,14 +10,14 @@ logging.basicConfig(filename='history_game.txt',
                     level=logging.INFO)
 
 def add_new_username():
-    """LIFE IS GOOD"""
+    """This method adds names of new players"""
     player1 = input("Please, enter name first user: ")
     player2 = input("Please, enter name second user: ")
     player_sign = {"X": player1, "0": player2}
     return player1, player2, player_sign
 
 def check_win(table_cells):
-    """LIFE IS GOOD"""
+    """This method checked matches with winner combinations"""
     winner_sets = [(1, 2, 3), (4, 5, 6),
                    (7, 8, 9), (1, 4, 7),
                    (2, 5, 8), (3, 6, 9),
@@ -30,7 +30,7 @@ def check_win(table_cells):
     return False
 
 def play(player1, player2, player_sign, players_success):
-    """LIFE IS GOOD"""
+    """This method implements game core logic"""
     print(f"{player1} vs {player2} game has begun! ")
     print(f"{player1} will play - 'X'")
     print(f"{player2} will play - '0'")
@@ -38,12 +38,12 @@ def play(player1, player2, player_sign, players_success):
     table_cells = list(range(10))
     display_game_field(table_cells)
     counter = 0
-    is_finished = True
+    winner_exists = True
 
     while True:
         if counter == 9:
             print("Draw! :)")
-            is_finished = False
+            winner_exists = False
             break
         if counter >= 5:
             finish_game = check_win(table_cells)
@@ -72,11 +72,11 @@ def play(player1, player2, player_sign, players_success):
         else:
             counter += 1
             display_game_field(table_cells)
-    write_to_file(is_finished, finish_game, player_sign)
+    write_to_file(winner_exists, finish_game, player_sign)
     restart_game(player1, player2, finish_game, player_sign, players_success)
 
 def display_game_field(table_cells):
-    """LIFE IS GOOD"""
+    """This method shows the game field state"""
     print("-" * 13)
     for i in range(3):
         print("|", table_cells[i*3 + 1], "|",
@@ -84,15 +84,15 @@ def display_game_field(table_cells):
               table_cells[i*3 + 3], "|")
         print("-" * 13)
 
-def write_to_file(is_finished, finish_game, player_sign):
+def write_to_file(winner_exists, finish_game, player_sign):
     """This module write to file logs"""
-    if is_finished:
+    if winner_exists:
         logging.info("Winner: %s", player_sign[finish_game])
     else:
         logging.info("Game finished with DRAW")
 
 def restart_game(player1, player2, finish_game, player_sign, players_success):
-    """LIFE IS GOOD"""
+    """Implements restart game with players from previous game"""
     while True:
         print("1 - Restart game")
         print("2 - Exit to menu")
@@ -115,7 +115,7 @@ def restart_game(player1, player2, finish_game, player_sign, players_success):
                 print("Enter, please, number 1 or 4.")
 
 def view_prev_games(filename):
-    """LIFE IS GOOD"""
+    """Displays games history and winners"""
     with open(filename, "r") as file:
         previous_games = file.read()
     if len(previous_games) == 0:
@@ -124,7 +124,7 @@ def view_prev_games(filename):
         print(previous_games)
 
 def menu():
-    """LIFE IS GOOD"""
+    """Implements players menu"""
     player1, player2, player_sign = add_new_username()
 
     while True:
