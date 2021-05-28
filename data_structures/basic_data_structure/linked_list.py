@@ -52,6 +52,7 @@ class LinkedList:
             self.tail = new_node
 
     def lookup(self, value):
+        """This method displays linked list"""
         desired_value = self.head
         indx = 0
         while desired_value is not None:
