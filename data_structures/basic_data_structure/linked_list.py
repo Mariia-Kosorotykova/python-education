@@ -100,21 +100,3 @@ class LinkedList:
             value = node.value
             del node
             return value
-
-if __name__ == "__main__":
-    # testing
-    list_ex = LinkedList()
-    list_ex.append("one")
-    list_ex.append("two")
-    list_ex.prepend("zero")
-    list_ex.list_output()
-    print(list_ex.lookup("two"))
-    print(list_ex.lookup("abcd"))
-    list_ex.insert("start", 0)
-    list_ex.insert("finish", 4)
-    list_ex.insert("medium", 3)
-    list_ex.insert("error", 6)
-    list_ex.list_output()
-    list_ex.delete(0)
-    list_ex.delete(2)
-    list_ex.list_output()
