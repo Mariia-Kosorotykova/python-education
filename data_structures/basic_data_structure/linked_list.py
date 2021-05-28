@@ -32,7 +32,7 @@ class LinkedList:
             list_output = list_output.next_value
 
     def prepend(self, new_value):
-        """This method adds node of linked list to start"""
+        """This method adds node to the beginning"""
         new_node = Node(new_value)
         if self.head is None:
             self.head = new_node
