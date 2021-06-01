@@ -1,8 +1,7 @@
 """This module implements Queue"""
 
 
-from linked_list import Node, LinkedList
-
+from .linked_list import Node, LinkedList
 
 class Queue(LinkedList):
     """This children class implements of the Queue"""
@@ -12,13 +11,7 @@ class Queue(LinkedList):
 
     def enqueue(self, new_value):
         """This method adds to end queue"""
-        new_node = Node(new_value)
-        if self.head is None:
-            self.head = new_node
-            self.tail = new_node
-        else:
-            self.tail.next_value = new_node
-            self.tail = new_node
+        self.append(new_value)
 
     def dequeue(self):
         """This method removes last element of queue"""
@@ -33,14 +26,7 @@ class Queue(LinkedList):
         return self.head.value
 
     def peek_last(self):
-        """This method returns first element of queue"""
+        """This method returns last element of queue"""
         if self.head is None:
             return None
         return self.tail.value
-
-    def queue_output(self):
-        """This method displays queue"""
-        queue_output = self.head
-        while queue_output is not None:
-            print(queue_output.value)
-            queue_output = queue_output.next_value

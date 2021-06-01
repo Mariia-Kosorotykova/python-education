@@ -7,7 +7,6 @@ class Node:
         self.value = value
         self.next_value = None
 
-
 class LinkedList:
     """This class implements of the linked list"""
     def __init__(self):
@@ -24,7 +23,7 @@ class LinkedList:
             length += 1
         return length
 
-    def list_output(self):
+    def display(self):
         """This method print linked list"""
         list_output = self.head
         while list_output is not None:

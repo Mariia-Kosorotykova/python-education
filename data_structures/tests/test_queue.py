@@ -1,16 +1,15 @@
 """This module describes unit testing for module queue.py"""
 
-import pytest
 
+import pytest
 from data_structures.basic_data_structure.queue import Queue
-# from data_structures.basic_data_structure.linked_list import Node, LinkedList
 
 def test_enqueue_queue():
     queue_with_elements = Queue()
     queue_with_elements.enqueue(1)
     queue_with_elements.enqueue(2)
     queue_with_elements.enqueue(3)
-    assert queue_with_elements.queue_output() == print(1, 2, 3, sep="\n")
+    assert queue_with_elements.display() == print(1, 2, 3, sep="\n")
 
 @pytest.fixture
 def queue():
@@ -22,15 +21,15 @@ def queue():
 
 def test_dequeue(queue):
     queue.dequeue()
-    assert queue.queue_output() == print("two", 3, sep="\n")
+    assert queue.display() == print("two", 3, sep="\n")
 
 def test_peek_last(queue):
     queue.peek_last()
-    assert queue.queue_output() == print(3)
+    assert queue.display() == print(3)
 
 def test_peek_first(queue):
     queue.peek_first()
-    assert queue.queue_output() == print(1)
+    assert queue.display() == print(1)
 
 def test_dequeue_empty_queue():
     empty_queue = Queue()
