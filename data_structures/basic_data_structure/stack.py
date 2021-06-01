@@ -23,13 +23,3 @@ class Stack(LinkedList):
         if self.head is None:
             return None
         return self.head.value
-
-a = Stack()
-a.push(2)
-# a.display()
-a.push(3)
-a.push(4)
-# print(a.display())
-a.pop()
-a.display()
-print(a.peek())
