@@ -5,9 +5,6 @@ from .linked_list import Node, LinkedList
 
 class Queue(LinkedList):
     """This children class implements of the Queue"""
-    def __init__(self):
-        self.head = None
-        self.tail = None
 
     def enqueue(self, new_value):
         """This method adds to end queue"""
