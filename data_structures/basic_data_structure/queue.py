@@ -1,7 +1,7 @@
 """This module implements Queue"""
 
 
-from .linked_list import Node, LinkedList
+from .linked_list import LinkedList
 
 class Queue(LinkedList):
     """This children class implements of the Queue"""

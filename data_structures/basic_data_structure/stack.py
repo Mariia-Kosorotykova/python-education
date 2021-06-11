@@ -1,7 +1,7 @@
 """This module implements Stack"""
 
 
-from .linked_list import Node, LinkedList
+from .linked_list import LinkedList
 
 class Stack(LinkedList):
     """This children class implements of the Stack"""
