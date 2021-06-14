@@ -47,7 +47,6 @@ CREATE TABLE IF NOT EXISTS Carts (
 CREATE TABLE IF NOT EXISTS Cart_product (
     carts_cart_id INT,
     products_product_id INT,
-    PRIMARY KEY (carts_cart_id, products_product_id),
     FOREIGN KEY (carts_cart_id)
             REFERENCES Carts(cart_id),
     FOREIGN KEY (products_product_id)
