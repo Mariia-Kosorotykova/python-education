@@ -54,9 +54,9 @@ SELECT * FROM orders
 WHERE created_at <= '2020-12-31' AND order_status_order_status_id < 4;
 
 SELECT * FROM orders
-WHERE created_at <= '2020-12-31' AND order_status_order_status_id IN (SELECT order_status_id FROM order_status
-																	WHERE status_name != 'Finished' AND
-																	status_name != 'Canceled');
+WHERE created_at <= '2020-12-31' AND order_status_order_status_id
+IN (SELECT order_status_id FROM order_status
+WHERE status_name != 'Finished' AND status_name != 'Canceled');
 
 -- Display all baskets that were created, but the order was never placed
 SELECT * FROM carts LEFT JOIN orders
