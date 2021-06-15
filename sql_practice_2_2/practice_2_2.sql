@@ -43,6 +43,7 @@ WHERE EXTRACT(MONTH FROM created_at) < 7
 SELECT * FROM products
 WHERE category_id in (7, 11, 18);
 
+
 SELECT * FROM products JOIN categories
 ON products.category_id = categories.category_id
 WHERE categories.category_title IN ('Category 7', 'Category 11', 'Category 18');
