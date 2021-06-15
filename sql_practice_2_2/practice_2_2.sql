@@ -11,9 +11,7 @@ SELECT * FROM order_status;
 -- Exercise 2
 -- Display orders that have been successfully delivered and paid
 SELECT * FROM orders
-WHERE order_status_order_status_id =
-	(SELECT order_status_id FROM order_status
-	WHERE status_name = 'Finished');
+WHERE order_status_order_status_id = 4;
 
 -- Exercise 3
 -- Display products with a price of more than 80.00 and less than or equal to 150.00
@@ -72,4 +70,5 @@ WHERE order_status_order_status_id =
 
 -- Show the maximum transaction amount for the 3rd quarter of 2020
 SELECT MAX(total) FROM orders
-WHERE created_at BETWEEN '2020-07-01' AND '2020-09-30';
+WHERE created_at BETWEEN '2020-07-01' AND '2020-09-30'
+	AND order_status_order_status_id = 4;
