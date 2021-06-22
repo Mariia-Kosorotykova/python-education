@@ -1,22 +1,14 @@
 -- creation view for order_status table
--- according to the conditions of change of views
-CREATE VIEW ORDER_ADDITIONAL_STATUS AS
-SELECT * FROM order_status;
+CREATE VIEW GENERAL_TOTAL_STATUSES AS
+SELECT status_name, SUM(total)
+FROM order_status JOIN orders
+ON order_status_id = order_status_order_status_id
+WHERE order_status_id in (1, 4, 5)
+GROUP BY status_name;
 
-INSERT INTO ORDER_ADDITIONAL_STATUS
-VALUES(10, 'New_status'),
-	  (15, 'False status');
+SELECT * FROM GENERAL_TOTAL_STATUSES;
 
-UPDATE ORDER_ADDITIONAL_STATUS
-SET status_name = 'Updated_status'
-WHERE order_status_id = 15;
-
-DELETE FROM ORDER_ADDITIONAL_STATUS
-WHERE order_status_id = 10;
-
-SELECT * FROM ORDER_ADDITIONAL_STATUS;
-
-DROP VIEW ORDER_ADDITIONAL_STATUS;
+DROP VIEW GENERAL_TOTAL_STATUSES;
 
 
 -- creation view for products table
