@@ -60,7 +60,6 @@ BEGIN
 END;
 $$;
 
-BEGIN;
 CALL decrease_in_price(4, 50);
 
 -- 2. Stored procedure with loop, transactions and if clause
@@ -85,7 +84,6 @@ BEGIN
 END;
 $$;
 
-BEGIN;
 CALL decrease_in_price(4, 50);
 
 -- 3.Comparing the price of each product with the AVG price of the products in the product category.
